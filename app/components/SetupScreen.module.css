@@ -56,6 +56,40 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  cursor: move;
+  transition: all 0.2s;
+  padding: 0.25rem;
+  margin: -0.25rem;
+  border-radius: 10px;
+}
+
+.playerInput:hover {
+  background: #f9f9f9;
+}
+
+.playerInput:active {
+  cursor: grabbing;
+}
+
+.dragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.dragHandle:hover {
+  color: #667eea;
+  transform: scale(1.1);
+}
+
+.dragHandle:active {
+  cursor: grabbing;
 }
 
 .input {

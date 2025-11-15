@@ -40,6 +40,28 @@ export default function SetupScreen() {
     setPlayerNames(newNames);
   };
 
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', index.toString());
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
+    e.preventDefault();
+    const dragIndex = parseInt(e.dataTransfer.getData('text/plain'));
+
+    if (dragIndex === dropIndex) return;
+
+    const newNames = [...playerNames];
+    const [draggedItem] = newNames.splice(dragIndex, 1);
+    newNames.splice(dropIndex, 0, draggedItem);
+    setPlayerNames(newNames);
+  };
+
   const handleStartGame = () => {
     const validNames = playerNames.filter((name) => name.trim() !== '');
     if (validNames.length >= 3) {
@@ -64,7 +86,17 @@ export default function SetupScreen() {
           <h2 className={styles.sectionTitle}>Players ({validNames.length})</h2>
           <div className={styles.playersList}>
             {playerNames.map((name, index) => (
-              <div key={index} className={styles.playerInput}>
+              <div
+                key={index}
+                className={styles.playerInput}
+                draggable
+                onDragStart={(e) => handleDragStart(e, index)}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, index)}
+              >
+                <div className={styles.dragHandle} title="Drag to reorder">
+                  ☰
+                </div>
                 <input
                   type="text"
                   value={name}
@@ -76,6 +108,7 @@ export default function SetupScreen() {
                   <button
                     onClick={() => handleRemovePlayer(index)}
                     className={styles.removeButton}
+                    title="Remove player"
                   >
                     ✕
                   </button>
