@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spy in the Group
+
+A fun, pass-and-play party game where players try to find the spy among them. One player is secretly designated as the spy, while everyone else knows the secret location. The spy must blend in and figure out the location, while the others try to identify the spy without being too obvious.
+
+## Game Overview
+
+- **Players:** 3-10 people (one device shared among all)
+- **Duration:** 5-10 minutes per round
+- **Goal:**
+  - Non-spies: Find the spy
+  - Spy: Discover the secret location or avoid detection
+
+## How to Play
+
+1. **Setup:** Enter player names and select game duration
+2. **Role Reveal:** Pass the device around - each player sees their role privately
+   - Non-spies see the secret location and their role
+   - The spy sees only that they are the spy
+3. **Question Round:** Players take turns asking each other questions
+   - Non-spies try to expose the spy with location-related questions
+   - The spy tries to blend in and gather clues
+4. **End Game:** When time runs out, either:
+   - Vote on who you think is the spy
+   - Let the spy guess the location
+
+## Features
+
+- 20 pre-defined locations with unique roles
+- Beautiful, responsive UI with gradient designs
+- Countdown timer with visual progress
+- Pass-and-play mechanics for single device
+- Vote or spy guess end game options
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Learn More
+Build for production:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm build
+pnpm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** CSS Modules
+- **State Management:** React Context API
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/
+├── components/       # React components for each screen
+├── contexts/         # Game state management
+├── data/            # Locations and roles data
+├── types/           # TypeScript type definitions
+├── layout.tsx       # Root layout with GameProvider
+└── page.tsx         # Main page with phase routing
+```
