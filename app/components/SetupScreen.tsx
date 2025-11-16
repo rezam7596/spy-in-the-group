@@ -1,8 +1,9 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useGame} from '../contexts/GameContext';
 import {GameMode, Language} from '../types/game';
+import {loadSetupSettings, saveSetupSettings} from '../utils/setupSettings';
 import styles from './SetupScreen.module.css';
 import RoomLobby from './RoomLobby';
 
@@ -26,6 +27,35 @@ export default function SetupScreen() {
   const [includeRoles, setIncludeRolesLocal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('en');
   const [showLobby, setShowLobby] = useState(false);
+
+  // Load saved settings on mount
+  useEffect(() => {
+    const saved = loadSetupSettings();
+    if (saved) {
+      setGameMode(saved.gameMode);
+      setPlayerNames(saved.playerNames);
+      setHostName(saved.hostName);
+      setDuration(saved.timerDuration);
+      setIncludeRolesLocal(saved.includeRoles);
+      setSelectedLanguage(saved.language);
+    }
+  }, []);
+
+  // Save settings with debounce when they change
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      saveSetupSettings({
+        gameMode,
+        playerNames,
+        hostName,
+        timerDuration: duration,
+        includeRoles,
+        language: selectedLanguage,
+      });
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [gameMode, playerNames, hostName, duration, includeRoles, selectedLanguage]);
 
   const handleAddPlayer = () => {
     setPlayerNames([...playerNames, '']);
