@@ -9,7 +9,7 @@ export async function POST(
 ) {
   try {
     const { roomId } = await params;
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
 
     if (!room) {
       return NextResponse.json(
@@ -73,7 +73,7 @@ export async function POST(
     });
 
     // Update room with game data
-    const success = updateRoom(roomId, {
+    const success = await updateRoom(roomId, {
       status: 'playing',
       gamePhase: 'revealing',
       location,
@@ -88,7 +88,7 @@ export async function POST(
       );
     }
 
-    const updatedRoom = getRoom(roomId);
+    const updatedRoom = await getRoom(roomId);
     return NextResponse.json({ room: updatedRoom });
   } catch (error) {
     console.error('Error starting game:', error);

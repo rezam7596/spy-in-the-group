@@ -7,7 +7,7 @@ export async function POST(
 ) {
   try {
     const { roomId } = await params;
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
 
     if (!room) {
       return NextResponse.json(
@@ -24,7 +24,7 @@ export async function POST(
     }
 
     // Transition to voting phase
-    const success = updateRoom(roomId, {
+    const success = await updateRoom(roomId, {
       gamePhase: 'voting',
       votes: [], // Initialize empty votes array
     });
@@ -36,7 +36,7 @@ export async function POST(
       );
     }
 
-    const updatedRoom = getRoom(roomId);
+    const updatedRoom = await getRoom(roomId);
     return NextResponse.json({ room: updatedRoom });
   } catch (error) {
     console.error('Error starting voting:', error);

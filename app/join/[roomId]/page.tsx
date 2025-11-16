@@ -235,6 +235,9 @@ export default function JoinPage({params}: { params: Promise<{ roomId: string }>
                     <span className={styles.playerNumber}>{index + 1}</span>
                     <span className={styles.playerName}>
                       {player}
+                      {index === 0 && (
+                        <span className={styles.hostBadge}> (Host)</span>
+                      )}
                       {player === currentPlayerName && (
                         <span className={styles.youBadge}> (You)</span>
                       )}

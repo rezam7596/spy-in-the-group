@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { roomId } = await params;
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
 
     if (!room) {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function PATCH(
       );
     }
 
-    const success = updateRoom(roomId, { status });
+    const success = await updateRoom(roomId, { status });
 
     if (!success) {
       return NextResponse.json(
@@ -50,7 +50,7 @@ export async function PATCH(
       );
     }
 
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
     return NextResponse.json({ room });
   } catch (error) {
     return NextResponse.json(

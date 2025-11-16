@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       createdAt: Date.now(),
     };
 
-    createRoom(room);
+    await createRoom(room);
 
     return NextResponse.json({ room });
   } catch (error) {

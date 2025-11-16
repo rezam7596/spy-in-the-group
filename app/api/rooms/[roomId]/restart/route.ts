@@ -15,7 +15,7 @@ export async function POST(
     return NextResponse.json({error: 'Player ID required'}, {status: 400});
   }
 
-  const room = getRoom(roomId);
+  const room = await getRoom(roomId);
 
   if (!room) {
     return NextResponse.json({error: 'Room not found'}, {status: 404});
@@ -27,7 +27,7 @@ export async function POST(
   }
 
   // Reset room to waiting state with new game
-  const success = updateRoom(roomId, {
+  const success = await updateRoom(roomId, {
     status: 'waiting',
     gamePhase: 'waiting',
     location: null,
@@ -41,7 +41,7 @@ export async function POST(
   }
 
   // Get the updated room object
-  const updatedRoom = getRoom(roomId);
+  const updatedRoom = await getRoom(roomId);
 
   return NextResponse.json({
     success: true,

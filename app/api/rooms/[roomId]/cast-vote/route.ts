@@ -17,7 +17,7 @@ export async function POST(
       );
     }
 
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
 
     if (!room) {
       return NextResponse.json(
@@ -59,7 +59,7 @@ export async function POST(
       updates.status = 'finished';
     }
 
-    const success = updateRoom(roomId, updates);
+    const success = await updateRoom(roomId, updates);
 
     if (!success) {
       return NextResponse.json(
@@ -68,7 +68,7 @@ export async function POST(
       );
     }
 
-    const updatedRoom = getRoom(roomId);
+    const updatedRoom = await getRoom(roomId);
     return NextResponse.json({
       success: true,
       allVoted,

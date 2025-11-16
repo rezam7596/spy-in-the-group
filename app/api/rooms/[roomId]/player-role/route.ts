@@ -17,7 +17,7 @@ export async function POST(
       );
     }
 
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
 
     if (!room) {
       return NextResponse.json(

@@ -6,9 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f mongodb",
+    "docker:restart": "docker compose restart mongodb"
   },
   "dependencies": {
+    "@vercel/functions": "^3.3.2",
+    "mongodb": "^7.0.0",
     "next": "16.0.3",
     "qrcode.react": "^4.2.0",
     "react": "19.2.0",

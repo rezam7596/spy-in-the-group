@@ -17,7 +17,7 @@ export async function POST(
       );
     }
 
-    const success = addPlayerToRoom(roomId, playerName);
+    const success = await addPlayerToRoom(roomId, playerName);
 
     if (!success) {
       return NextResponse.json(
@@ -26,7 +26,7 @@ export async function POST(
       );
     }
 
-    const room = getRoom(roomId);
+    const room = await getRoom(roomId);
     return NextResponse.json({ room });
   } catch (error) {
     return NextResponse.json(
