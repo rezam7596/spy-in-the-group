@@ -1,11 +1,12 @@
 'use client';
 
 import {useState, useEffect} from 'react';
+import {useRouter} from 'next/navigation';
 import {useGame} from '../contexts/GameContext';
 import {GameMode, Language} from '../types/game';
 import {loadSetupSettings, saveSetupSettings} from '../utils/setupSettings';
+import {savePlayerSession} from '../utils/playerSession';
 import styles from './SetupScreen.module.css';
-import RoomLobby from './RoomLobby';
 
 const LANGUAGES = [
   {code: 'en' as Language, name: 'English', flag: '🇬🇧'},
@@ -19,6 +20,7 @@ const LANGUAGES = [
 ];
 
 export default function SetupScreen() {
+  const router = useRouter();
   const {setPlayers, setTimerDuration, setIncludeRoles, setLanguage, setMode, startGame} = useGame();
   const [gameMode, setGameMode] = useState<GameMode>('single-device');
   const [playerNames, setPlayerNames] = useState<string[]>(['', '', '', '']);
@@ -26,7 +28,6 @@ export default function SetupScreen() {
   const [duration, setDuration] = useState(8);
   const [includeRoles, setIncludeRolesLocal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('en');
-  const [showLobby, setShowLobby] = useState(false);
 
   // Load saved settings on mount
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function SetupScreen() {
     setPlayerNames(newNames);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     setTimerDuration(duration);
     setIncludeRoles(includeRoles);
     setLanguage(selectedLanguage);
@@ -109,8 +110,43 @@ export default function SetupScreen() {
         startGame();
       }
     } else {
-      // Multi-device mode - show lobby with host name
-      setShowLobby(true);
+      // Multi-device mode - create room and redirect to lobby
+      try {
+        const hostId = `host-${Date.now()}`;
+        const response = await fetch('/api/rooms/create', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            hostId,
+            hostName: hostName.trim(),
+            settings: {
+              timerDuration: duration,
+              includeRoles,
+              language: selectedLanguage,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create room');
+        }
+
+        const data = await response.json();
+        const roomId = data.room.id;
+
+        // Save host session
+        savePlayerSession({
+          playerId: hostId,
+          playerName: hostName.trim(),
+          roomId,
+          isHost: true,
+        });
+
+        // Redirect to unified lobby
+        router.push(`/join/${roomId}`);
+      } catch (err) {
+        console.error('Failed to create room:', err);
+      }
     }
   };
 
@@ -118,11 +154,6 @@ export default function SetupScreen() {
   const canStart = gameMode === 'single-device'
     ? validNames.length >= 3
     : hostName.trim() !== '';
-
-  if (showLobby) {
-    return <RoomLobby settings={{timerDuration: duration, includeRoles, language: selectedLanguage}}
-                      hostName={hostName.trim()}/>;
-  }
 
   return (
     <div className={styles.container}>

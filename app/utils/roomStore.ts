@@ -1,7 +1,9 @@
 import { Room } from '../types/game';
 
 // In-memory room storage (would be Redis/DB in production)
-const rooms = new Map<string, Room>();
+if (!globalThis.rooms) {
+  globalThis.rooms = new Map<string, Room>();
+}
 
 // Clean up old rooms (older than 2 hours)
 setInterval(() => {

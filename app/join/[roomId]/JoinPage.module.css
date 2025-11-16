@@ -106,6 +106,267 @@
   font-size: 0.95rem;
 }
 
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  padding: 2rem;
+  font-weight: 600;
+}
+
+/* Lobby Styles */
+.roomCode {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.codeLabel {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.code {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.qrSection {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border: 2px solid #e0e0e0;
+}
+
+.qrSection svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.qrHint {
+  margin: 1rem 0 0 0;
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.urlSection {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.urlInput {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: #f5f5f5;
+  color: #666;
+}
+
+.copyButton {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.copyButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.playerCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.playerLabel {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.playerNameDisplay {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.playersSection {
+  background: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+}
+
+.playersTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.noPlayers {
+  text-align: center;
+  color: #999;
+  font-size: 0.95rem;
+  padding: 1rem;
+}
+
+.playersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.playerItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.playerNumber {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.playerName {
+  color: #333;
+  font-size: 1rem;
+}
+
+.youBadge {
+  color: #667eea;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.hostControls {
+  margin-bottom: 1.5rem;
+}
+
+.startButton {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.startButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+}
+
+.startButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.minPlayersWarning {
+  text-align: center;
+  color: #ff4757;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.waitingInfo {
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.waitingInfo p {
+  color: #667eea;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.leaveButton {
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.leaveButton:hover {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
 /* Mobile Responsiveness - 360px width optimization */
 @media (max-width: 480px) {
   .container {
@@ -145,5 +406,66 @@
 
   .hint p {
     font-size: 0.875rem;
+  }
+
+  .roomCode {
+    padding: 1.25rem;
+  }
+
+  .code {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .qrSection {
+    padding: 1.5rem;
+  }
+
+  .qrSection svg {
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  .urlSection {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .urlInput {
+    padding: 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .copyButton {
+    padding: 0.875rem;
+  }
+
+  .playerCard {
+    padding: 1.25rem;
+  }
+
+  .playerNameDisplay {
+    font-size: 1.5rem;
+  }
+
+  .playersSection {
+    padding: 1.25rem;
+  }
+
+  .playersTitle {
+    font-size: 1rem;
+  }
+
+  .startButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .waitingInfo {
+    padding: 1.5rem 0;
+  }
+
+  .waitingInfo p {
+    font-size: 1rem;
   }
 }

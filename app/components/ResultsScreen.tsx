@@ -25,63 +25,126 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
   const [players, setPlayers] = useState<string[]>([]);
   const [mostVotedPlayer, setMostVotedPlayer] = useState<string>('');
   const [spyWon, setSpyWon] = useState(false);
+  const [isHost, setIsHost] = useState(false);
+  const [restarting, setRestarting] = useState(false);
 
   useEffect(() => {
-    fetchResults();
-  }, []);
+    async function fetchResults() {
+      try {
+        const response = await fetch(`/api/rooms/${roomId}`);
+        if (response.ok) {
+          const data = await response.json();
+          const room = data.room;
 
-  const fetchResults = async () => {
-    try {
-      const response = await fetch(`/api/rooms/${roomId}`);
-      if (response.ok) {
-        const data = await response.json();
-        const room = data.room;
+          // Find the spy
+          const spyRole = room.playerRoles?.find((pr: any) => pr.isSpy);
+          const spyPlayerName = spyRole?.playerName || '';
 
-        // Find the spy
-        const spyRole = room.playerRoles?.find((pr: any) => pr.isSpy);
-        const spyPlayerName = spyRole?.playerName || '';
+          // Calculate vote counts
+          const voteCounts: { [key: string]: number } = {};
+          room.players.forEach((p: string) => {
+            voteCounts[p] = 0;
+          });
 
-        // Calculate vote counts
-        const voteCounts: { [key: string]: number } = {};
-        room.players.forEach((p: string) => {
-          voteCounts[p] = 0;
-        });
+          room.votes?.forEach((vote: PlayerVote) => {
+            voteCounts[vote.votedForName] = (voteCounts[vote.votedForName] || 0) + 1;
+          });
 
-        room.votes?.forEach((vote: PlayerVote) => {
-          voteCounts[vote.votedForName] = (voteCounts[vote.votedForName] || 0) + 1;
-        });
+          // Find most voted player
+          let maxVotes = 0;
+          let mostVoted = '';
+          Object.entries(voteCounts).forEach(([player, count]) => {
+            if (count > maxVotes) {
+              maxVotes = count;
+              mostVoted = player;
+            }
+          });
 
-        // Find most voted player
-        let maxVotes = 0;
-        let mostVoted = '';
-        Object.entries(voteCounts).forEach(([player, count]) => {
-          if (count > maxVotes) {
-            maxVotes = count;
-            mostVoted = player;
-          }
-        });
+          // Determine winner: spy wins if they weren't caught
+          const spyWins = mostVoted !== spyPlayerName;
 
-        // Determine winner: spy wins if they weren't caught
-        const spyWins = mostVoted !== spyPlayerName;
-
-        setSpyName(spyPlayerName);
-        setLocation(room.location);
-        setLanguage(room.settings?.language || 'en');
-        setVotes(room.votes || []);
-        setPlayers(room.players);
-        setMostVotedPlayer(mostVoted);
-        setSpyWon(spyWins);
+          setSpyName(spyPlayerName);
+          setLocation(room.location);
+          setLanguage(room.settings?.language || 'en');
+          setVotes(room.votes || []);
+          setPlayers(room.players);
+          setMostVotedPlayer(mostVoted);
+          setSpyWon(spyWins);
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error('Failed to fetch results:', err);
         setLoading(false);
       }
-    } catch (err) {
-      console.error('Failed to fetch results:', err);
-      setLoading(false);
     }
-  };
+    fetchResults();
+
+    // Check if current player is the host
+    const session = getPlayerSession();
+    if (session) {
+      setIsHost(session.isHost);
+    }
+  }, []);
+
+  // Poll for game phase changes (host restarting)
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const response = await fetch(`/api/rooms/${roomId}`);
+        if (response.ok) {
+          const data = await response.json();
+          const room = data.room;
+
+          // If room goes back to waiting, redirect to lobby
+          if (room.gamePhase === 'waiting') {
+            clearInterval(interval);
+            router.push(`/join/${roomId}`);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to check room status:', err);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [roomId, router]);
 
   const handlePlayAgain = () => {
     clearPlayerSession();
     router.push('/');
+  };
+
+  const handleRestart = async () => {
+    const session = getPlayerSession();
+    if (!session || !session.isHost) {
+      return;
+    }
+
+    setRestarting(true);
+
+    try {
+      const response = await fetch(`/api/rooms/${roomId}/restart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          playerId: session.playerId,
+        }),
+      });
+
+      if (response.ok) {
+        // Redirect to lobby - other players will be redirected via polling
+        router.push(`/join/${roomId}`);
+      } else {
+        const data = await response.json();
+        console.error('Failed to restart game:', data.error);
+        setRestarting(false);
+      }
+    } catch (err) {
+      console.error('Failed to restart game:', err);
+      setRestarting(false);
+    }
   };
 
   if (loading) {
@@ -165,9 +228,37 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
           </div>
         </div>
 
-        <button onClick={handlePlayAgain} className={styles.playAgainButton}>
-          Play Again
-        </button>
+        {isHost ? (
+          <div className={styles.hostButtons}>
+            <button
+              onClick={handleRestart}
+              disabled={restarting}
+              className={styles.playAgainButton}
+            >
+              {restarting ? 'Starting New Game...' : 'New Game'}
+            </button>
+            <p className={styles.hostInfo}>
+              Start a new game with the same players and a new location
+            </p>
+            <button
+              onClick={handlePlayAgain}
+              disabled={restarting}
+              className={styles.endGameButton}
+            >
+              End Game
+            </button>
+            <p className={styles.hostInfo}>
+              Return to setup and create a new room
+            </p>
+          </div>
+        ) : (
+          <div className={styles.waitingContainer}>
+            <p className={styles.waitingText}>Waiting for host to start a new game...</p>
+            <button onClick={handlePlayAgain} className={styles.leaveButton}>
+              Leave Room
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

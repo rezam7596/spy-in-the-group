@@ -199,6 +199,81 @@
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
 }
 
+.playAgainButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hostButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hostInfo {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.endGameButton {
+  width: 100%;
+  padding: 1.5rem;
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.endGameButton:hover:not(:disabled) {
+  background: #f5f5ff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.endGameButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.waitingContainer {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.waitingText {
+  font-size: 1.1rem;
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.leaveButton {
+  padding: 1rem 2rem;
+  background: white;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.leaveButton:hover {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
 /* Mobile Responsiveness - 360px width optimization */
 @media (max-width: 480px) {
   .container {
@@ -258,5 +333,31 @@
   .playAgainButton {
     padding: 1.2rem;
     font-size: 1.1rem;
+  }
+
+  .hostInfo {
+    font-size: 0.85rem;
+  }
+
+  .waitingContainer {
+    padding: 1.5rem 0;
+  }
+
+  .waitingText {
+    font-size: 1rem;
+  }
+
+  .leaveButton {
+    padding: 0.9rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .endGameButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .hostButtons {
+    gap: 0.75rem;
   }
 }
