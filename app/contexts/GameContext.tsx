@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { GameState, GameActions, Player, Language } from '../types/game';
+import { GameState, GameActions, Player, Language, GameMode } from '../types/game';
 import { getRandomLocation } from '../data/locations';
 
 interface GameContextType extends GameState, GameActions {}
@@ -10,6 +10,8 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const initialState: GameState = {
   phase: 'setup',
+  mode: 'single-device',
+  roomId: null,
   players: [],
   secretLocation: null,
   spyId: null,
@@ -57,6 +59,20 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setState((prev) => ({
       ...prev,
       language,
+    }));
+  };
+
+  const setMode = (mode: GameMode) => {
+    setState((prev) => ({
+      ...prev,
+      mode,
+    }));
+  };
+
+  const setRoomId = (roomId: string) => {
+    setState((prev) => ({
+      ...prev,
+      roomId,
     }));
   };
 
@@ -170,6 +186,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setTimerDuration,
     setIncludeRoles,
     setLanguage,
+    setMode,
+    setRoomId,
     startGame,
     nextReveal,
     startTimer,

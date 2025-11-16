@@ -1,0 +1,200 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  padding: 2rem;
+}
+
+/* Win Cards */
+.spyWinCard {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+  padding: 2.5rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+}
+
+.playersWinCard {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  padding: 2.5rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+}
+
+.winIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.winTitle {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+}
+
+.winText {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Info Section */
+.infoSection {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.infoItem {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.infoLabel {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.infoValue {
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* Votes Section */
+.votesSection {
+  margin-bottom: 2rem;
+}
+
+.votesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.voteItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.voteName {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spyBadge {
+  background: #ff4757;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.voteBar {
+  position: relative;
+  background: #e0e0e0;
+  border-radius: 8px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.voteBarFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.5s ease;
+  border-radius: 8px;
+}
+
+.voteCount {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+  font-weight: 700;
+  font-size: 1.1rem;
+  z-index: 1;
+  mix-blend-mode: difference;
+  color: white;
+}
+
+/* Button */
+.playAgainButton {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.playAgainButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}

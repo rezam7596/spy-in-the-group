@@ -1,0 +1,198 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin: 0 0 2rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  padding: 2rem;
+}
+
+.error {
+  color: #ff4757;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+  padding: 1.5rem;
+  background: #ffebee;
+  border-radius: 10px;
+}
+
+.playerCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.playerLabel {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.playerNameDisplay {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.playersSection {
+  margin-bottom: 2rem;
+}
+
+.playersTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.noPlayers {
+  text-align: center;
+  color: #999;
+  padding: 2rem;
+  font-style: italic;
+}
+
+.playersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.playerItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.playerItem:hover {
+  background: #e9ecef;
+}
+
+.playerNumber {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.playerName {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.youBadge {
+  color: #667eea;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.waitingInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 15px;
+  margin-bottom: 1.5rem;
+}
+
+.waitingInfo p {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.leaveButton {
+  width: 100%;
+  padding: 1.2rem;
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.leaveButton:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}

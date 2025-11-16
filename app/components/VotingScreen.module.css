@@ -1,0 +1,196 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin: 0 0 2rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  padding: 2rem;
+}
+
+.error {
+  color: #ff4757;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 600;
+  padding: 1rem;
+  background: #ffebee;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.playersList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.playerButton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.playerButton:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.playerButton.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+}
+
+.playerIcon {
+  font-size: 1.5rem;
+}
+
+.playerNameText {
+  flex: 1;
+  font-weight: 600;
+  text-align: left;
+}
+
+.voteButton {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+}
+
+.voteButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.voteButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.hint {
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.waitingSection {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: white;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+}
+
+.votedTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.votedText {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0 0 2rem 0;
+}
+
+.votedText strong {
+  color: #667eea;
+  font-weight: 700;
+}
+
+.waitingInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.waitingInfo p {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

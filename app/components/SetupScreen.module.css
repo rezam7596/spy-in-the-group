@@ -291,3 +291,10 @@
   font-size: 0.9rem;
   font-weight: 600;
 }
+
+.helperText {
+  text-align: center;
+  color: #666;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

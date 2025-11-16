@@ -1,0 +1,237 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.playerBadge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.timerCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 3rem 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.timerLabel {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.timerDisplay {
+  color: white;
+  font-size: 5rem;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 1.5rem;
+}
+
+.progressBarContainer {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: white;
+  border-radius: 10px;
+  transition: width 1s linear;
+}
+
+.instructions {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+}
+
+.instructionsTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.instructionsList {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #555;
+}
+
+.instructionsList li {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.instructionsList li:last-child {
+  margin-bottom: 0;
+}
+
+.instructionsList strong {
+  color: #667eea;
+}
+
+.roomInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #e3f2fd;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.roomLabel {
+  color: #1565c0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.roomCode {
+  color: #1565c0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Courier New', monospace;
+}
+
+.startVotingButton {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+}
+
+.startVotingButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+}
+
+.startVotingButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.waitingForHost {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.waitingForHost p {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.leaveButton {
+  width: 100%;
+  padding: 1.2rem;
+  background: white;
+  color: #ff4757;
+  border: 2px solid #ff4757;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.leaveButton:hover {
+  background: #ff4757;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+}
+
+.timeUpBanner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+  color: white;
+  padding: 3rem 4rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(255, 71, 87, 0.5);
+  z-index: 1000;
+  animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.timeUpIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.timeUpText {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

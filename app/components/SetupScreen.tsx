@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useGame } from '../contexts/GameContext';
-import { Language } from '../types/game';
+import { Language, GameMode } from '../types/game';
 import styles from './SetupScreen.module.css';
+import RoomLobby from './RoomLobby';
 
 const LANGUAGES = [
   { code: 'en' as Language, name: 'English', flag: '🇬🇧' },
@@ -17,11 +18,14 @@ const LANGUAGES = [
 ];
 
 export default function SetupScreen() {
-  const { setPlayers, setTimerDuration, setIncludeRoles, setLanguage, startGame } = useGame();
+  const { setPlayers, setTimerDuration, setIncludeRoles, setLanguage, setMode, startGame } = useGame();
+  const [gameMode, setGameMode] = useState<GameMode>('single-device');
   const [playerNames, setPlayerNames] = useState<string[]>(['', '', '', '']);
+  const [hostName, setHostName] = useState<string>('');
   const [duration, setDuration] = useState(8);
   const [includeRoles, setIncludeRolesLocal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('en');
+  const [showLobby, setShowLobby] = useState(false);
 
   const handleAddPlayer = () => {
     setPlayerNames([...playerNames, '']);
@@ -62,19 +66,32 @@ export default function SetupScreen() {
     setPlayerNames(newNames);
   };
 
-  const handleStartGame = () => {
-    const validNames = playerNames.filter((name) => name.trim() !== '');
-    if (validNames.length >= 3) {
-      setPlayers(validNames);
-      setTimerDuration(duration);
-      setIncludeRoles(includeRoles);
-      setLanguage(selectedLanguage);
-      startGame();
+  const handleContinue = () => {
+    setTimerDuration(duration);
+    setIncludeRoles(includeRoles);
+    setLanguage(selectedLanguage);
+    setMode(gameMode);
+
+    if (gameMode === 'single-device') {
+      const validNames = playerNames.filter((name) => name.trim() !== '');
+      if (validNames.length >= 3) {
+        setPlayers(validNames);
+        startGame();
+      }
+    } else {
+      // Multi-device mode - show lobby with host name
+      setShowLobby(true);
     }
   };
 
   const validNames = playerNames.filter((name) => name.trim() !== '');
-  const canStart = validNames.length >= 3;
+  const canStart = gameMode === 'single-device'
+    ? validNames.length >= 3
+    : hostName.trim() !== '';
+
+  if (showLobby) {
+    return <RoomLobby settings={{ timerDuration: duration, includeRoles, language: selectedLanguage }} hostName={hostName.trim()} />;
+  }
 
   return (
     <div className={styles.container}>
@@ -83,7 +100,48 @@ export default function SetupScreen() {
         <p className={styles.subtitle}>Setup your game</p>
 
         <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Players ({validNames.length})</h2>
+          <h2 className={styles.sectionTitle}>Game Mode</h2>
+          <div className={styles.rolesToggle}>
+            <button
+              onClick={() => setGameMode('single-device')}
+              className={`${styles.modeButton} ${
+                gameMode === 'single-device' ? styles.active : ''
+              }`}
+            >
+              <div className={styles.modeTitle}>📱 Single Device</div>
+              <div className={styles.modeDesc}>Pass and play on one device</div>
+            </button>
+            <button
+              onClick={() => setGameMode('multi-device')}
+              className={`${styles.modeButton} ${
+                gameMode === 'multi-device' ? styles.active : ''
+              }`}
+            >
+              <div className={styles.modeTitle}>🌐 Multi Device</div>
+              <div className={styles.modeDesc}>Players join via link/QR code</div>
+            </button>
+          </div>
+        </div>
+
+        {gameMode === 'multi-device' && (
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>Your Name (Host)</h2>
+            <input
+              type="text"
+              value={hostName}
+              onChange={(e) => setHostName(e.target.value)}
+              placeholder="Enter your name"
+              className={styles.input}
+            />
+            <p className={styles.helperText}>
+              You will be the first player. Others can join via QR code.
+            </p>
+          </div>
+        )}
+
+        {gameMode === 'single-device' && (
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>Players ({validNames.length})</h2>
           <div className={styles.playersList}>
             {playerNames.map((name, index) => (
               <div
@@ -121,7 +179,8 @@ export default function SetupScreen() {
               + Add Player
             </button>
           )}
-        </div>
+          </div>
+        )}
 
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Language</h2>
@@ -183,15 +242,19 @@ export default function SetupScreen() {
         </div>
 
         <button
-          onClick={handleStartGame}
+          onClick={handleContinue}
           disabled={!canStart}
           className={styles.startButton}
         >
-          Start Game
+          {gameMode === 'single-device' ? 'Start Game' : 'Create Room'}
         </button>
 
-        {!canStart && (
+        {!canStart && gameMode === 'single-device' && (
           <p className={styles.warning}>Minimum 3 players required</p>
+        )}
+
+        {!canStart && gameMode === 'multi-device' && (
+          <p className={styles.warning}>Please enter your name</p>
         )}
       </div>
     </div>

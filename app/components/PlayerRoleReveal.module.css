@@ -1,0 +1,200 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  padding: 2rem;
+}
+
+.error {
+  color: #ff4757;
+  font-size: 1.1rem;
+  text-align: center;
+  font-weight: 600;
+  padding: 2rem;
+  background: #ffebee;
+  border-radius: 10px;
+}
+
+/* Spy Card */
+.spyCard {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+  padding: 3rem 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+}
+
+.spyIcon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.spyTitle {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.spyText {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Regular Player Card */
+.regularCard {
+  margin-bottom: 2rem;
+}
+
+.locationSection {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.locationLabel {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.locationName {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  word-wrap: break-word;
+}
+
+.roleSection {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.roleLabel {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.roleName {
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.instructions {
+  background: #e3f2fd;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.instructions p {
+  margin: 0.5rem 0;
+  color: #1565c0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Buttons and Actions */
+.confirmButton {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confirmButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+}
+
+.confirmButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.waitingSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.waitingText {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

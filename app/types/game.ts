@@ -5,6 +5,10 @@ export type GamePhase =
   | 'voting'
   | 'results';
 
+export type GameMode =
+  | 'single-device'
+  | 'multi-device';
+
 export type Language =
   | 'en'
   | 'fa'
@@ -41,6 +45,8 @@ export interface Location {
 
 export interface GameState {
   phase: GamePhase;
+  mode: GameMode;
+  roomId: string | null;
   players: Player[];
   secretLocation: Location | null;
   spyId: string | null;
@@ -58,6 +64,8 @@ export interface GameActions {
   setTimerDuration: (minutes: number) => void;
   setIncludeRoles: (include: boolean) => void;
   setLanguage: (language: Language) => void;
+  setMode: (mode: GameMode) => void;
+  setRoomId: (roomId: string) => void;
   startGame: () => void;
   nextReveal: () => void;
   startTimer: () => void;
@@ -65,4 +73,35 @@ export interface GameActions {
   voteForSpy: (playerId: string) => void;
   spyGuessLocation: (locationName: string) => void;
   resetGame: () => void;
+}
+
+// API types for room management
+export interface PlayerRole {
+  playerName: string;
+  isSpy: boolean;
+  role?: string; // Only for non-spy players if includeRoles is true
+  hasConfirmed: boolean;
+}
+
+export interface PlayerVote {
+  voterName: string;
+  votedForName: string;
+}
+
+export interface Room {
+  id: string;
+  hostId: string;
+  players: string[];
+  settings: {
+    timerDuration: number;
+    includeRoles: boolean;
+    language: Language;
+  };
+  status: 'waiting' | 'playing' | 'finished';
+  gamePhase?: 'waiting' | 'revealing' | 'timer' | 'voting' | 'results';
+  location?: Location | null;
+  playerRoles?: PlayerRole[];
+  votes?: PlayerVote[];
+  gameStartTime?: number | null;
+  createdAt: number;
 }
