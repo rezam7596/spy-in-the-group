@@ -235,3 +235,88 @@
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .playerBadge {
+    padding: 0.4rem 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .timerCard {
+    padding: 2rem 1rem;
+  }
+
+  .timerDisplay {
+    font-size: 3.5rem;
+  }
+
+  .instructions {
+    padding: 1.5rem;
+  }
+
+  .instructionsTitle {
+    font-size: 1.1rem;
+  }
+
+  .instructionsList li {
+    font-size: 0.9rem;
+  }
+
+  .roomInfo {
+    padding: 0.875rem;
+  }
+
+  .roomLabel,
+  .roomCode {
+    font-size: 0.85rem;
+  }
+
+  .startVotingButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .waitingForHost {
+    padding: 1.25rem;
+  }
+
+  .waitingForHost p {
+    font-size: 0.95rem;
+  }
+
+  .leaveButton {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .timeUpBanner {
+    padding: 2rem 1.5rem;
+  }
+
+  .timeUpIcon {
+    font-size: 3rem;
+  }
+
+  .timeUpText {
+    font-size: 1.8rem;
+  }
+}

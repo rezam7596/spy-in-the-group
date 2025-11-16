@@ -198,3 +198,67 @@
     transform: rotate(360deg);
   }
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .spyCard {
+    padding: 2rem 1rem;
+  }
+
+  .spyIcon {
+    font-size: 3.5rem;
+  }
+
+  .spyTitle {
+    font-size: 1.5rem;
+  }
+
+  .spyText {
+    font-size: 0.95rem;
+  }
+
+  .locationSection {
+    padding: 1.5rem;
+  }
+
+  .locationName {
+    font-size: 1.8rem;
+  }
+
+  .roleSection {
+    padding: 1.25rem;
+  }
+
+  .roleName {
+    font-size: 1.5rem;
+  }
+
+  .instructions {
+    padding: 1.25rem;
+  }
+
+  .instructions p {
+    font-size: 0.9rem;
+  }
+
+  .confirmButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .waitingText {
+    font-size: 0.95rem;
+  }
+}

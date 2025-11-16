@@ -221,3 +221,70 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .roomCode {
+    padding: 1.5rem;
+  }
+
+  .code {
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .qrSection {
+    margin: 1.5rem 0;
+  }
+
+  .urlSection {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .urlInput {
+    font-size: 0.85rem;
+  }
+
+  .copyButton {
+    width: 100%;
+    padding: 0.875rem;
+  }
+
+  .playersTitle {
+    font-size: 1.1rem;
+  }
+
+  .playerItem {
+    padding: 0.875rem;
+  }
+
+  .playerName {
+    font-size: 1rem;
+  }
+
+  .startButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .warning {
+    font-size: 0.85rem;
+  }
+}

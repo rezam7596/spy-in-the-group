@@ -173,3 +173,64 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .playerName {
+    font-size: 2rem;
+  }
+
+  .spyIcon,
+  .locationIcon {
+    font-size: 3.5rem;
+  }
+
+  .roleTitle {
+    font-size: 1.5rem;
+  }
+
+  .roleSubtitle {
+    font-size: 1rem;
+  }
+
+  .spyMessage {
+    padding: 1.5rem;
+  }
+
+  .spyMessage p {
+    font-size: 1rem;
+  }
+
+  .locationBox,
+  .roleBox {
+    padding: 1rem;
+  }
+
+  .locationLabel,
+  .roleLabel {
+    font-size: 0.8rem;
+  }
+
+  .locationName,
+  .roleName {
+    font-size: 1.5rem;
+  }
+
+  .readyButton,
+  .gotItButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+}

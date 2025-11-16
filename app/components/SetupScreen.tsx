@@ -1,24 +1,24 @@
 'use client';
 
-import { useState } from 'react';
-import { useGame } from '../contexts/GameContext';
-import { Language, GameMode } from '../types/game';
+import {useState} from 'react';
+import {useGame} from '../contexts/GameContext';
+import {GameMode, Language} from '../types/game';
 import styles from './SetupScreen.module.css';
 import RoomLobby from './RoomLobby';
 
 const LANGUAGES = [
-  { code: 'en' as Language, name: 'English', flag: '🇬🇧' },
-  { code: 'fa' as Language, name: 'فارسی', flag: '🇮🇷' },
-  { code: 'sv' as Language, name: 'Svenska', flag: '🇸🇪' },
-  { code: 'zh' as Language, name: '中文', flag: '🇨🇳' },
-  { code: 'hi' as Language, name: 'हिन्दी', flag: '🇮🇳' },
-  { code: 'es' as Language, name: 'Español', flag: '🇪🇸' },
-  { code: 'fr' as Language, name: 'Français', flag: '🇫🇷' },
-  { code: 'ar' as Language, name: 'العربية', flag: '🇸🇦' },
+  {code: 'en' as Language, name: 'English', flag: '🇬🇧'},
+  {code: 'fa' as Language, name: 'فارسی', flag: '🇮🇷'},
+  {code: 'sv' as Language, name: 'Svenska', flag: '🇸🇪'},
+  {code: 'zh' as Language, name: '中文', flag: '🇨🇳'},
+  {code: 'hi' as Language, name: 'हिन्दी', flag: '🇮🇳'},
+  {code: 'es' as Language, name: 'Español', flag: '🇪🇸'},
+  {code: 'fr' as Language, name: 'Français', flag: '🇫🇷'},
+  {code: 'ar' as Language, name: 'العربية', flag: '🇸🇦'},
 ];
 
 export default function SetupScreen() {
-  const { setPlayers, setTimerDuration, setIncludeRoles, setLanguage, setMode, startGame } = useGame();
+  const {setPlayers, setTimerDuration, setIncludeRoles, setLanguage, setMode, startGame} = useGame();
   const [gameMode, setGameMode] = useState<GameMode>('single-device');
   const [playerNames, setPlayerNames] = useState<string[]>(['', '', '', '']);
   const [hostName, setHostName] = useState<string>('');
@@ -90,7 +90,8 @@ export default function SetupScreen() {
     : hostName.trim() !== '';
 
   if (showLobby) {
-    return <RoomLobby settings={{ timerDuration: duration, includeRoles, language: selectedLanguage }} hostName={hostName.trim()} />;
+    return <RoomLobby settings={{timerDuration: duration, includeRoles, language: selectedLanguage}}
+                      hostName={hostName.trim()}/>;
   }
 
   return (
@@ -126,59 +127,61 @@ export default function SetupScreen() {
         {gameMode === 'multi-device' && (
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Your Name (Host)</h2>
-            <input
-              type="text"
-              value={hostName}
-              onChange={(e) => setHostName(e.target.value)}
-              placeholder="Enter your name"
-              className={styles.input}
-            />
-            <p className={styles.helperText}>
-              You will be the first player. Others can join via QR code.
-            </p>
+            <div className={styles.playersList}>
+              <input
+                type="text"
+                value={hostName}
+                onChange={(e) => setHostName(e.target.value)}
+                placeholder="Enter your name"
+                className={styles.input}
+              />
+              <p className={styles.helperText}>
+                You will be the first player. Others can join via QR code.
+              </p>
+            </div>
           </div>
         )}
 
         {gameMode === 'single-device' && (
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Players ({validNames.length})</h2>
-          <div className={styles.playersList}>
-            {playerNames.map((name, index) => (
-              <div
-                key={index}
-                className={styles.playerInput}
-                draggable
-                onDragStart={(e) => handleDragStart(e, index)}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, index)}
-              >
-                <div className={styles.dragHandle} title="Drag to reorder">
-                  ☰
+            <div className={styles.playersList}>
+              {playerNames.map((name, index) => (
+                <div
+                  key={index}
+                  className={styles.playerInput}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, index)}
+                >
+                  <div className={styles.dragHandle} title="Drag to reorder">
+                    ☰
+                  </div>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => handleNameChange(index, e.target.value)}
+                    placeholder={`Player ${index + 1}`}
+                    className={styles.input}
+                  />
+                  {playerNames.length > 3 && (
+                    <button
+                      onClick={() => handleRemovePlayer(index)}
+                      className={styles.removeButton}
+                      title="Remove player"
+                    >
+                      ✕
+                    </button>
+                  )}
                 </div>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => handleNameChange(index, e.target.value)}
-                  placeholder={`Player ${index + 1}`}
-                  className={styles.input}
-                />
-                {playerNames.length > 3 && (
-                  <button
-                    onClick={() => handleRemovePlayer(index)}
-                    className={styles.removeButton}
-                    title="Remove player"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-          {playerNames.length < 10 && (
-            <button onClick={handleAddPlayer} className={styles.addButton}>
-              + Add Player
-            </button>
-          )}
+              ))}
+            </div>
+            {playerNames.length < 10 && (
+              <button onClick={handleAddPlayer} className={styles.addButton}>
+                + Add Player
+              </button>
+            )}
           </div>
         )}
 

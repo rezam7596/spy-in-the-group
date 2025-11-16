@@ -275,3 +275,78 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .playersGrid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .playerButton {
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .divider {
+    margin: 1.5rem 0;
+  }
+
+  .spyGuessButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .locationsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .locationButton {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .winnerBadge {
+    font-size: 2rem;
+    padding: 1.5rem;
+  }
+
+  .resultTitle {
+    font-size: 1.5rem;
+  }
+
+  .gameInfo {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .infoBox {
+    padding: 1.25rem;
+  }
+
+  .infoLabel {
+    font-size: 0.75rem;
+  }
+
+  .infoValue {
+    font-size: 1.1rem;
+  }
+
+  .playAgainButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+}

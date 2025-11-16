@@ -105,3 +105,45 @@
   color: #666;
   font-size: 0.95rem;
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  .input {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
+
+  .joinButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .hint {
+    padding: 1rem;
+  }
+
+  .hint p {
+    font-size: 0.875rem;
+  }
+}

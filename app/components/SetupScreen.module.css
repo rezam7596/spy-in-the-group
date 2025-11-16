@@ -99,6 +99,7 @@
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.2s;
+  min-width: 150px;
 }
 
 .input:focus {
@@ -295,6 +296,91 @@
 .helperText {
   text-align: center;
   color: #666;
-  margin-top: 0.5rem;
   font-size: 0.9rem;
+}
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+
+  .languageGrid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .languageButton {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .languageFlag {
+    font-size: 1.5rem;
+  }
+
+  .languageName {
+    font-size: 0.75rem;
+  }
+
+  .timerOptions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .timerButton {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+
+  .rolesToggle {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .modeButton {
+    padding: 1rem;
+  }
+
+  .modeTitle {
+    font-size: 1rem;
+  }
+
+  .modeDesc {
+    font-size: 0.8rem;
+  }
+
+  .startButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .playerInput {
+    gap: 0.5rem;
+  }
+
+  .input {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
+
+  .addButton {
+    padding: 0.875rem;
+    font-size: 0.95rem;
+  }
 }

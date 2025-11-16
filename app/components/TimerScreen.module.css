@@ -161,3 +161,68 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .timerCircle {
+    width: 200px;
+    height: 200px;
+  }
+
+  .timerInner {
+    width: 180px;
+    height: 180px;
+  }
+
+  .timerText {
+    font-size: 3rem;
+  }
+
+  .timerLabel {
+    font-size: 0.85rem;
+  }
+
+  .playersGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .playerChip {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .tipsSection {
+    padding: 1.5rem;
+  }
+
+  .tipsTitle {
+    font-size: 1.1rem;
+  }
+
+  .tips {
+    padding: 1rem;
+  }
+
+  .tips li {
+    font-size: 0.9rem;
+  }
+
+  .startButton,
+  .endButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+}

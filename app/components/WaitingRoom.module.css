@@ -196,3 +196,51 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
 }
+
+/* Mobile Responsiveness - 360px width optimization */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .playerCard {
+    padding: 1.5rem;
+  }
+
+  .playerNameDisplay {
+    font-size: 1.5rem;
+  }
+
+  .playersTitle {
+    font-size: 1.1rem;
+  }
+
+  .playerItem {
+    padding: 0.875rem;
+  }
+
+  .playerName {
+    font-size: 1rem;
+  }
+
+  .waitingInfo p {
+    font-size: 0.95rem;
+  }
+
+  .leaveButton {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
