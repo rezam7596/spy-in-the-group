@@ -28,6 +28,8 @@ export default function SetupScreen() {
   const [duration, setDuration] = useState(8);
   const [includeRoles, setIncludeRolesLocal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('en');
+  const [isCreating, setIsCreating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Load saved settings on mount
   useEffect(() => {
@@ -111,6 +113,9 @@ export default function SetupScreen() {
       }
     } else {
       // Multi-device mode - create room and redirect to lobby
+      setIsCreating(true);
+      setError(null);
+
       try {
         const hostId = `host-${Date.now()}`;
         const response = await fetch('/api/rooms/create', {
@@ -146,6 +151,8 @@ export default function SetupScreen() {
         router.push(`/join/${roomId}`);
       } catch (err) {
         console.error('Failed to create room:', err);
+        setError('Failed to create room. Please try again.');
+        setIsCreating(false);
       }
     }
   };
@@ -307,10 +314,14 @@ export default function SetupScreen() {
 
         <button
           onClick={handleContinue}
-          disabled={!canStart}
+          disabled={!canStart || isCreating}
           className={styles.startButton}
         >
-          {gameMode === 'single-device' ? 'Start Game' : 'Create Room'}
+          {gameMode === 'single-device'
+            ? 'Start Game'
+            : isCreating
+              ? 'Creating Room...'
+              : 'Create Room'}
         </button>
 
         {!canStart && gameMode === 'single-device' && (
@@ -319,6 +330,10 @@ export default function SetupScreen() {
 
         {!canStart && gameMode === 'multi-device' && (
           <p className={styles.warning}>Please enter your name</p>
+        )}
+
+        {error && (
+          <p className={styles.warning}>{error}</p>
         )}
       </div>
     </div>
