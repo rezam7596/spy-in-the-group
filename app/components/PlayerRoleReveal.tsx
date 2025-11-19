@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getPlayerSession } from '../utils/playerSession';
-import { Location, Language } from '../types/game';
+import { Word, Language } from '../types/game';
 import styles from './PlayerRoleReveal.module.css';
 
 interface PlayerRoleData {
   playerName: string;
   isSpy: boolean;
   role?: string;
-  location?: Location | null;
+  word?: Word | null;
   hasConfirmed: boolean;
   gamePhase?: string;
 }
@@ -130,7 +130,7 @@ export default function PlayerRoleReveal({ roomId, language }: PlayerRoleRevealP
     );
   }
 
-  const locationName = roleData.location?.name[language] || '';
+  const wordName = roleData.word?.name[language] || '';
 
   return (
     <div className={styles.container}>
@@ -142,15 +142,15 @@ export default function PlayerRoleReveal({ roomId, language }: PlayerRoleRevealP
             <div className={styles.spyIcon}>🕵️</div>
             <h2 className={styles.spyTitle}>You are the SPY!</h2>
             <p className={styles.spyText}>
-              You don&apos;t know the location. Try to figure it out by asking questions
+              You don&apos;t know the word. Try to figure it out by asking questions
               without revealing that you&apos;re the spy!
             </p>
           </div>
         ) : (
           <div className={styles.regularCard}>
             <div className={styles.locationSection}>
-              <div className={styles.locationLabel}>The Location</div>
-              <div className={styles.locationName}>{locationName}</div>
+              <div className={styles.locationLabel}>The Word</div>
+              <div className={styles.locationName}>{wordName}</div>
             </div>
 
             {roleData.role && (
@@ -162,7 +162,7 @@ export default function PlayerRoleReveal({ roomId, language }: PlayerRoleRevealP
 
             <div className={styles.instructions}>
               <p>Remember this information!</p>
-              <p>Try to find the spy without giving away the location.</p>
+              <p>Try to find the spy without giving away the word.</p>
             </div>
           </div>
         )}

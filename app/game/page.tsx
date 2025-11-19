@@ -78,7 +78,7 @@ export default function GamePage() {
           <ul className={styles.instructionsList}>
             <li>Wait for the host to call your name</li>
             <li>When it&apos;s your turn, look at the host&apos;s device to see your role</li>
-            <li>Remember your location (or that you&apos;re the spy!)</li>
+            <li>Remember your word (or that you&apos;re the spy!)</li>
             <li>Participate in the discussion to find the spy</li>
           </ul>
         </div>

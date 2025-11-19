@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getPlayerSession, clearPlayerSession } from '../utils/playerSession';
-import { Language, Location, PlayerVote } from '../types/game';
+import { Language, Word, PlayerVote } from '../types/game';
 import styles from './ResultsScreen.module.css';
 
 interface ResultsScreenProps {
@@ -19,7 +19,7 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [spyName, setSpyName] = useState<string>('');
-  const [location, setLocation] = useState<Location | null>(null);
+  const [word, setWord] = useState<Word | null>(null);
   const [language, setLanguage] = useState<Language>('en');
   const [votes, setVotes] = useState<PlayerVote[]>([]);
   const [players, setPlayers] = useState<string[]>([]);
@@ -64,7 +64,7 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
           const spyWins = mostVoted !== spyPlayerName;
 
           setSpyName(spyPlayerName);
-          setLocation(room.location);
+          setWord(room.word);
           setLanguage(room.settings?.language || 'en');
           setVotes(room.votes || []);
           setPlayers(room.players);
@@ -157,7 +157,7 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
     );
   }
 
-  const locationName = location?.name[language] || 'Unknown';
+  const wordName = word?.name[language] || 'Unknown';
 
   // Calculate vote counts for display
   const voteCounts = players.map(playerName => {
@@ -190,8 +190,8 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
               <div className={styles.infoValue}>{spyName}</div>
             </div>
             <div className={styles.infoItem}>
-              <div className={styles.infoLabel}>The Location Was</div>
-              <div className={styles.infoValue}>{locationName}</div>
+              <div className={styles.infoLabel}>The Word Was</div>
+              <div className={styles.infoValue}>{wordName}</div>
             </div>
             <div className={styles.infoItem}>
               <div className={styles.infoLabel}>Most Voted Player</div>
@@ -238,7 +238,7 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
               {restarting ? 'Starting New Game...' : 'New Game'}
             </button>
             <p className={styles.hostInfo}>
-              Start a new game with the same players and a new location
+              Start a new game with the same players and a new word
             </p>
             <button
               onClick={handlePlayAgain}

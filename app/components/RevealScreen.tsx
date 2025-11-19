@@ -5,12 +5,12 @@ import { useGame } from '../contexts/GameContext';
 import styles from './RevealScreen.module.css';
 
 export default function RevealScreen() {
-  const { players, currentRevealIndex, secretLocation, includeRoles, language, nextReveal } = useGame();
+  const { players, currentRevealIndex, secretWord, includeRoles, language, nextReveal } = useGame();
   const [revealed, setRevealed] = useState(false);
 
   const currentPlayer = players[currentRevealIndex];
   const isSpy = currentPlayer?.isSpy;
-  const locationName = secretLocation?.name[language] || '';
+  const wordName = secretWord?.name[language] || '';
 
   const handleReady = () => {
     setRevealed(true);
@@ -48,10 +48,10 @@ export default function RevealScreen() {
                 <div className={styles.spyIcon}>🕵️</div>
                 <h1 className={styles.roleTitle}>You are the SPY!</h1>
                 <div className={styles.roleDescription}>
-                  <p>Try to discover the secret location without revealing yourself.</p>
+                  <p>Try to discover the secret word without revealing yourself.</p>
                   <p>Ask questions to blend in and gather clues.</p>
                   <p className={styles.warning}>
-                    Don't be too obvious that you don't know the location!
+                    Don't be too obvious that you don't know the word!
                   </p>
                 </div>
               </div>
@@ -60,8 +60,8 @@ export default function RevealScreen() {
                 <div className={styles.locationIcon}>📍</div>
                 <h1 className={styles.roleTitle}>You are NOT the spy</h1>
                 <div className={styles.locationBox}>
-                  <div className={styles.locationLabel}>Secret Location:</div>
-                  <div className={styles.locationName}>{locationName}</div>
+                  <div className={styles.locationLabel}>Secret Word:</div>
+                  <div className={styles.locationName}>{wordName}</div>
                 </div>
                 {includeRoles && currentPlayer.role && (
                   <div className={styles.roleBox}>
@@ -72,7 +72,7 @@ export default function RevealScreen() {
                 <div className={styles.roleDescription}>
                   <p>Find the spy by asking questions.</p>
                   <p className={styles.warning}>
-                    Be careful not to reveal the location too obviously!
+                    Be careful not to reveal the word too obviously!
                   </p>
                 </div>
               </div>

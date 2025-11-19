@@ -38,11 +38,40 @@
   margin-bottom: 2rem;
 }
 
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 .sectionTitle {
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0 0 1rem 0;
   color: #333;
+}
+
+.sectionHeader .sectionTitle {
+  margin: 0;
+}
+
+.selectAllButton {
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
+  color: #667eea;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.selectAllButton:hover {
+  background: #eef1ff;
+  border-color: #764ba2;
+  color: #764ba2;
 }
 
 .playersList {
@@ -140,6 +169,12 @@
   background: #eef1ff;
   border-color: #764ba2;
   color: #764ba2;
+}
+
+.difficultyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.75rem;
 }
 
 .languageGrid {
@@ -299,6 +334,92 @@
   font-size: 0.9rem;
 }
 
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.categoryButton {
+  padding: 0.75rem;
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  min-height: 75px;
+}
+
+.categoryButton:hover {
+  background: #eef1ff;
+  border-color: #667eea;
+}
+
+.categoryButton.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: transparent;
+}
+
+.categoryButton.active .categoryName {
+  color: white;
+}
+
+.categoryEmoji {
+  font-size: 1.8rem;
+}
+
+.categoryName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+}
+
+.difficultyDesc {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+.expandButton {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.75rem;
+  background: #f9f9f9;
+  color: #667eea;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.expandButton:hover {
+  background: #eef1ff;
+  border-color: #667eea;
+}
+
 /* Mobile Responsiveness - 360px width optimization */
 @media (max-width: 480px) {
   .container {
@@ -319,6 +440,22 @@
 
   .sectionTitle {
     font-size: 1.1rem;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .selectAllButton {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .difficultyGrid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.5rem;
   }
 
   .languageGrid {
@@ -382,5 +519,23 @@
   .addButton {
     padding: 0.875rem;
     font-size: 0.95rem;
+  }
+
+  .categoryGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .categoryButton {
+    padding: 0.6rem;
+    min-height: 70px;
+  }
+
+  .categoryEmoji {
+    font-size: 1.5rem;
+  }
+
+  .categoryName {
+    font-size: 0.7rem;
   }
 }

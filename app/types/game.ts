@@ -19,6 +19,25 @@ export type Language =
   | 'fr'
   | 'ar';
 
+export type Category =
+  | 'locations'
+  | 'food'
+  | 'drinks'
+  | 'animals'
+  | 'sports'
+  | 'professions'
+  | 'countries'
+  | 'movies'
+  | 'music'
+  | 'brands'
+  | 'party'
+  | 'celebrities'
+  | 'objects'
+  | 'hobbies'
+  | 'internet';
+
+export type Difficulty = 'easy' | 'medium' | 'hard';
+
 export interface Player {
   id: string;
   name: string;
@@ -27,7 +46,7 @@ export interface Player {
   role?: string;
 }
 
-export interface LocationTranslations {
+export interface WordTranslations {
   en: string;
   fa: string;
   sv: string;
@@ -38,9 +57,11 @@ export interface LocationTranslations {
   ar: string;
 }
 
-export interface Location {
-  name: LocationTranslations;
-  roles: string[];
+export interface Word {
+  name: WordTranslations;
+  roles?: string[]; // Only for locations category
+  category?: Category;
+  difficulty?: Difficulty;
 }
 
 export interface GameState {
@@ -48,15 +69,17 @@ export interface GameState {
   mode: GameMode;
   roomId: string | null;
   players: Player[];
-  secretLocation: Location | null;
+  secretWord: Word | null;
   spyId: string | null;
   currentRevealIndex: number;
   timerDuration: number; // in minutes
   includeRoles: boolean;
   language: Language;
+  selectedCategories: Category[];
+  selectedDifficulty: Difficulty;
   gameStartTime: number | null;
   votedSpyId: string | null;
-  spyGuessedLocation: string | null;
+  spyGuessedWord: string | null;
 }
 
 export interface GameActions {
@@ -64,6 +87,8 @@ export interface GameActions {
   setTimerDuration: (minutes: number) => void;
   setIncludeRoles: (include: boolean) => void;
   setLanguage: (language: Language) => void;
+  setCategories: (categories: Category[]) => void;
+  setDifficulty: (difficulty: Difficulty) => void;
   setMode: (mode: GameMode) => void;
   setRoomId: (roomId: string) => void;
   startGame: () => void;
@@ -71,7 +96,7 @@ export interface GameActions {
   startTimer: () => void;
   endGame: () => void;
   voteForSpy: (playerId: string) => void;
-  spyGuessLocation: (locationName: string) => void;
+  spyGuessWord: (wordName: string) => void;
   resetGame: () => void;
 }
 
@@ -96,10 +121,12 @@ export interface Room {
     timerDuration: number;
     includeRoles: boolean;
     language: Language;
+    categories: Category[];
+    difficulty: Difficulty;
   };
   status: 'waiting' | 'playing' | 'finished';
   gamePhase?: 'waiting' | 'revealing' | 'timer' | 'voting' | 'results';
-  location?: Location | null;
+  word?: Word | null;
   playerRoles?: PlayerRole[];
   votes?: PlayerVote[];
   gameStartTime?: number | null;

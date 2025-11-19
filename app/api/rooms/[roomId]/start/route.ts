@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getRoom, updateRoom } from '../../../../../app/utils/roomStore';
-import { getRandomLocation } from '../../../../../app/data/locations';
-import { PlayerRole } from '../../../../../app/types/game';
+import { getRandomWord } from '../../../../../app/data/words';
+import { PlayerRole, Category, Difficulty, Word } from '../../../../../app/types/game';
 
 export async function POST(
   request: NextRequest,
@@ -36,31 +36,35 @@ export async function POST(
     const randomSpyIndex = Math.floor(Math.random() * room.players.length);
     const spyName = room.players[randomSpyIndex];
 
-    // Select a random location
-    const location = getRandomLocation();
+    // Get categories and difficulty from room settings (with defaults for backward compatibility)
+    const categories: Category[] = room.settings.categories || ['locations'];
+    const difficulty: Difficulty = room.settings.difficulty || 'medium';
 
-    if (!location) {
+    // Select a random word based on selected categories and difficulty
+    const word = getRandomWord(categories, difficulty);
+
+    if (!word) {
       return NextResponse.json(
-        { error: 'Failed to select location' },
+        { error: 'Failed to select word' },
         { status: 500 }
       );
     }
 
-    // Assign roles to players
+    // Assign roles to players (only if roles exist - i.e., for locations category)
     const usedRoles: string[] = [];
     const playerRoles: PlayerRole[] = room.players.map((playerName, index) => {
       const isSpy = index === randomSpyIndex;
       let role: string | undefined;
 
-      if (room.settings.includeRoles && !isSpy && location) {
+      if (room.settings.includeRoles && !isSpy && word && word.roles) {
         // Assign a unique role to non-spy players
-        const availableRoles = location.roles.filter(r => !usedRoles.includes(r));
+        const availableRoles = word.roles.filter(r => !usedRoles.includes(r));
         if (availableRoles.length > 0) {
           role = availableRoles[Math.floor(Math.random() * availableRoles.length)];
           usedRoles.push(role);
         } else {
           // If all roles are used, pick a random one
-          role = location.roles[Math.floor(Math.random() * location.roles.length)];
+          role = word.roles[Math.floor(Math.random() * word.roles.length)];
         }
       }
 
@@ -76,7 +80,7 @@ export async function POST(
     const success = await updateRoom(roomId, {
       status: 'playing',
       gamePhase: 'revealing',
-      location,
+      word: word,
       playerRoles,
       gameStartTime: null, // Will be set when all players confirm
     });

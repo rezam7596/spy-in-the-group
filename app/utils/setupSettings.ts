@@ -1,8 +1,14 @@
-import { GameMode, Language } from '../types/game';
+import { GameMode, Language, Category, Difficulty } from '../types/game';
 
 const SETUP_SETTINGS_KEY = 'spy-game-setup-settings';
-const SETTINGS_VERSION = 1;
+const SETTINGS_VERSION = 2;
 const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+
+const ALL_CATEGORIES: Category[] = [
+  'locations', 'food', 'drinks', 'animals', 'sports',
+  'professions', 'countries', 'movies', 'music', 'brands',
+  'party', 'celebrities', 'objects', 'hobbies', 'internet'
+];
 
 export interface SetupSettings {
   version: number;
@@ -12,6 +18,8 @@ export interface SetupSettings {
   timerDuration: number;
   includeRoles: boolean;
   language: Language;
+  categories: Category[];
+  difficulty: Difficulty;
   lastUpdated: number;
 }
 
@@ -39,6 +47,8 @@ function validateSetupSettings(data: any): data is SetupSettings {
     typeof data.timerDuration === 'number' &&
     typeof data.includeRoles === 'boolean' &&
     typeof data.language === 'string' &&
+    Array.isArray(data.categories) &&
+    typeof data.difficulty === 'string' &&
     typeof data.lastUpdated === 'number'
   );
 }
@@ -55,6 +65,8 @@ export function getDefaultSettings(): Omit<SetupSettings, 'version' | 'lastUpdat
     timerDuration: 8,
     includeRoles: false,
     language: 'en',
+    categories: ALL_CATEGORIES, // Default: all categories selected
+    difficulty: 'medium',
   };
 }
 

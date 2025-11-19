@@ -1,27 +1,35 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { GameState, GameActions, Player, Language, GameMode } from '../types/game';
-import { getRandomLocation } from '../data/locations';
+import { GameState, GameActions, Player, Language, GameMode, Category, Difficulty } from '../types/game';
+import { getRandomWord } from '../data/words';
 
 interface GameContextType extends GameState, GameActions {}
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
+
+const ALL_CATEGORIES: Category[] = [
+  'locations', 'food', 'drinks', 'animals', 'sports',
+  'professions', 'countries', 'movies', 'music', 'brands',
+  'party', 'celebrities', 'objects', 'hobbies', 'internet'
+];
 
 const initialState: GameState = {
   phase: 'setup',
   mode: 'single-device',
   roomId: null,
   players: [],
-  secretLocation: null,
+  secretWord: null,
   spyId: null,
   currentRevealIndex: 0,
   timerDuration: 8,
   includeRoles: false,
   language: 'en',
+  selectedCategories: ALL_CATEGORIES,
+  selectedDifficulty: 'medium',
   gameStartTime: null,
   votedSpyId: null,
-  spyGuessedLocation: null,
+  spyGuessedWord: null,
 };
 
 export function GameProvider({ children }: { children: ReactNode }) {
@@ -62,6 +70,20 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const setCategories = (categories: Category[]) => {
+    setState((prev) => ({
+      ...prev,
+      selectedCategories: categories,
+    }));
+  };
+
+  const setDifficulty = (difficulty: Difficulty) => {
+    setState((prev) => ({
+      ...prev,
+      selectedDifficulty: difficulty,
+    }));
+  };
+
   const setMode = (mode: GameMode) => {
     setState((prev) => ({
       ...prev,
@@ -81,23 +103,23 @@ export function GameProvider({ children }: { children: ReactNode }) {
       // Randomly select a spy
       const randomSpyIndex = Math.floor(Math.random() * prev.players.length);
 
-      // Select a random location
-      const location = getRandomLocation();
+      // Select a random word based on selected categories and difficulty
+      const word = getRandomWord(prev.selectedCategories, prev.selectedDifficulty);
 
-      // Assign roles to players if includeRoles is true
+      // Assign roles to players if includeRoles is true AND roles exist (locations only)
       const usedRoles: string[] = [];
       const updatedPlayers = prev.players.map((player, index) => {
         let role: string | undefined;
 
-        if (prev.includeRoles && index !== randomSpyIndex && location) {
+        if (prev.includeRoles && index !== randomSpyIndex && word && word.roles) {
           // Assign a unique role to non-spy players
-          const availableRoles = location.roles.filter(r => !usedRoles.includes(r));
+          const availableRoles = word.roles.filter(r => !usedRoles.includes(r));
           if (availableRoles.length > 0) {
             role = availableRoles[Math.floor(Math.random() * availableRoles.length)];
             usedRoles.push(role);
           } else {
             // If all roles are used, pick a random one
-            role = location.roles[Math.floor(Math.random() * location.roles.length)];
+            role = word.roles[Math.floor(Math.random() * word.roles.length)];
           }
         }
 
@@ -112,7 +134,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         ...prev,
         phase: 'reveal',
         players: updatedPlayers,
-        secretLocation: location,
+        secretWord: word,
         spyId: updatedPlayers[randomSpyIndex].id,
         currentRevealIndex: 0,
       };
@@ -168,11 +190,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }));
   };
 
-  const spyGuessLocation = (locationName: string) => {
+  const spyGuessWord = (wordName: string) => {
     setState((prev) => ({
       ...prev,
       phase: 'results',
-      spyGuessedLocation: locationName,
+      spyGuessedWord: wordName,
     }));
   };
 
@@ -186,6 +208,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setTimerDuration,
     setIncludeRoles,
     setLanguage,
+    setCategories,
+    setDifficulty,
     setMode,
     setRoomId,
     startGame,
@@ -193,7 +217,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     startTimer,
     endGame,
     voteForSpy,
-    spyGuessLocation,
+    spyGuessWord,
     resetGame,
   };
 

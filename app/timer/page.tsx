@@ -161,7 +161,7 @@ export default function TimerPage() {
               <strong>Regular Players:</strong> Ask questions to figure out who the spy is
             </li>
             <li>
-              <strong>The Spy:</strong> Try to figure out the location without revealing yourself
+              <strong>The Spy:</strong> Try to figure out the word without revealing yourself
             </li>
             <li>
               <strong>Discussion:</strong> Take turns asking each other questions

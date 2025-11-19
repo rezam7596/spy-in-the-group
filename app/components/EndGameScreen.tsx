@@ -2,20 +2,22 @@
 
 import { useState } from 'react';
 import { useGame } from '../contexts/GameContext';
-import { DEFAULT_LOCATIONS } from '../data/locations';
+import { getFilteredWords } from '../data/words';
 import styles from './EndGameScreen.module.css';
 
 export default function EndGameScreen() {
   const {
     phase,
     players,
-    secretLocation,
+    secretWord,
     spyId,
     votedSpyId,
-    spyGuessedLocation,
+    spyGuessedWord,
     language,
+    selectedCategories,
+    selectedDifficulty,
     voteForSpy,
-    spyGuessLocation,
+    spyGuessWord,
     resetGame,
   } = useGame();
 
@@ -23,14 +25,17 @@ export default function EndGameScreen() {
 
   const spy = players.find((p) => p.id === spyId);
   const votedPlayer = players.find((p) => p.id === votedSpyId);
-  const locationName = secretLocation?.name[language] || '';
+  const wordName = secretWord?.name[language] || '';
+
+  // Get all possible words from the selected categories and difficulty
+  const possibleWords = getFilteredWords(selectedCategories, selectedDifficulty);
 
   const handleVote = (playerId: string) => {
     voteForSpy(playerId);
   };
 
-  const handleSpyGuess = (locationName: string) => {
-    spyGuessLocation(locationName);
+  const handleSpyGuess = (wordName: string) => {
+    spyGuessWord(wordName);
   };
 
   if (phase === 'voting') {
@@ -58,22 +63,22 @@ export default function EndGameScreen() {
             onClick={() => setShowSpyGuess(true)}
             className={styles.spyGuessButton}
           >
-            Let the Spy Guess the Location
+            Let the Spy Guess the Word
           </button>
 
           {showSpyGuess && (
             <div className={styles.locationGuess}>
               <h3 className={styles.guessTitle}>
-                {spy?.name}, pick the location:
+                {spy?.name}, pick the word:
               </h3>
               <div className={styles.locationsGrid}>
-                {DEFAULT_LOCATIONS.map((location) => (
+                {possibleWords.map((word) => (
                   <button
-                    key={location.name.en}
-                    onClick={() => handleSpyGuess(location.name[language])}
+                    key={word.name.en}
+                    onClick={() => handleSpyGuess(word.name[language])}
                     className={styles.locationButton}
                   >
-                    {location.name[language]}
+                    {word.name[language]}
                   </button>
                 ))}
               </div>
@@ -97,14 +102,14 @@ export default function EndGameScreen() {
         winner = 'Spy Wins!';
         message = `Wrong! ${votedPlayer?.name} is not the spy. The spy was ${spy?.name}!`;
       }
-    } else if (spyGuessedLocation) {
+    } else if (spyGuessedWord) {
       // Spy guessed
-      if (spyGuessedLocation === locationName) {
+      if (spyGuessedWord === wordName) {
         winner = 'Spy Wins!';
-        message = `${spy?.name} correctly guessed the location!`;
+        message = `${spy?.name} correctly guessed the word!`;
       } else {
         winner = 'Non-Spies Win!';
-        message = `${spy?.name} guessed wrong! The location was ${locationName}.`;
+        message = `${spy?.name} guessed wrong! The word was ${wordName}.`;
       }
     }
 
@@ -126,8 +131,8 @@ export default function EndGameScreen() {
                 <div className={styles.infoValue}>🕵️ {spy?.name}</div>
               </div>
               <div className={styles.infoBox}>
-                <div className={styles.infoLabel}>Secret Location</div>
-                <div className={styles.infoValue}>📍 {locationName}</div>
+                <div className={styles.infoLabel}>Secret Word</div>
+                <div className={styles.infoValue}>✨ {wordName}</div>
               </div>
             </div>
 

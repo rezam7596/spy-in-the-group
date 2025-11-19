@@ -57,8 +57,8 @@ export default function TimerScreen() {
               <h2>How to Play:</h2>
               <ul>
                 <li>Take turns asking each other questions</li>
-                <li>Non-spies: Try to find the spy without revealing the location</li>
-                <li>Spy: Blend in and try to guess the location</li>
+                <li>Non-spies: Try to find the spy without revealing the word</li>
+                <li>Spy: Blend in and try to guess the word</li>
                 <li>Be creative with your questions!</li>
               </ul>
             </div>
@@ -95,7 +95,7 @@ export default function TimerScreen() {
             </div>
 
             <div className={styles.tips}>
-              <p>💡 Ask questions about the location</p>
+              <p>💡 Ask questions about the word</p>
               <p>👀 Watch for suspicious behavior</p>
               <p>🤔 The spy is trying to blend in</p>
             </div>

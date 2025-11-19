@@ -3,7 +3,7 @@
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import {useGame} from '../contexts/GameContext';
-import {GameMode, Language} from '../types/game';
+import {GameMode, Language, Category, Difficulty} from '../types/game';
 import {loadSetupSettings, saveSetupSettings} from '../utils/setupSettings';
 import {savePlayerSession} from '../utils/playerSession';
 import styles from './SetupScreen.module.css';
@@ -19,17 +19,56 @@ const LANGUAGES = [
   {code: 'ar' as Language, name: 'العربية', flag: '🇸🇦'},
 ];
 
+const CATEGORIES = [
+  {code: 'locations' as Category, name: 'Locations', emoji: '📍'},
+  {code: 'food' as Category, name: 'Food & Dishes', emoji: '🍕'},
+  {code: 'drinks' as Category, name: 'Drinks & Beverages', emoji: '☕'},
+  {code: 'animals' as Category, name: 'Animals', emoji: '🐶'},
+  {code: 'sports' as Category, name: 'Sports & Games', emoji: '⚽'},
+  {code: 'professions' as Category, name: 'Professions', emoji: '👨‍⚕️'},
+  {code: 'countries' as Category, name: 'Countries', emoji: '🌍'},
+  {code: 'movies' as Category, name: 'Movies & TV Shows', emoji: '🎬'},
+  {code: 'music' as Category, name: 'Music Artists', emoji: '🎵'},
+  {code: 'brands' as Category, name: 'Brands', emoji: '🏷️'},
+  {code: 'party' as Category, name: 'Party & Drinking', emoji: '🍻'},
+  {code: 'celebrities' as Category, name: 'Celebrities', emoji: '⭐'},
+  {code: 'objects' as Category, name: 'Objects & Items', emoji: '📱'},
+  {code: 'hobbies' as Category, name: 'Hobbies & Pastimes', emoji: '🎨'},
+  {code: 'internet' as Category, name: 'Internet & Pop Culture', emoji: '🌐'},
+];
+
+const DIFFICULTIES = [
+  {code: 'easy' as Difficulty, name: 'Easy', desc: 'Very common words'},
+  {code: 'medium' as Difficulty, name: 'Medium', desc: 'Moderate difficulty'},
+  {code: 'hard' as Difficulty, name: 'Hard', desc: 'Rare but fun words'},
+];
+
 export default function SetupScreen() {
   const router = useRouter();
-  const {setPlayers, setTimerDuration, setIncludeRoles, setLanguage, setMode, startGame} = useGame();
+  const {setPlayers, setTimerDuration, setIncludeRoles, setLanguage, setCategories, setDifficulty, setMode, startGame} = useGame();
   const [gameMode, setGameMode] = useState<GameMode>('single-device');
   const [playerNames, setPlayerNames] = useState<string[]>(['', '', '', '']);
   const [hostName, setHostName] = useState<string>('');
   const [duration, setDuration] = useState(8);
   const [includeRoles, setIncludeRolesLocal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('en');
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>(
+    CATEGORIES.map(c => c.code) // Default: all categories selected
+  );
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('medium');
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [showAllLanguages, setShowAllLanguages] = useState(false);
+
+  // Check if roles should be available (only when locations is the sole category)
+  const showRolesToggle = selectedCategories.length === 1 && selectedCategories[0] === 'locations';
+
+  // Calculate how many items to show in first row
+  const CATEGORIES_PER_ROW = 2;
+  const LANGUAGES_PER_ROW = 3;
+  const visibleCategories = showAllCategories ? CATEGORIES : CATEGORIES.slice(0, CATEGORIES_PER_ROW);
+  const visibleLanguages = showAllLanguages ? LANGUAGES : LANGUAGES.slice(0, LANGUAGES_PER_ROW);
 
   // Load saved settings on mount
   useEffect(() => {
@@ -41,6 +80,12 @@ export default function SetupScreen() {
       setDuration(saved.timerDuration);
       setIncludeRolesLocal(saved.includeRoles);
       setSelectedLanguage(saved.language);
+      if (saved.categories) {
+        setSelectedCategories(saved.categories);
+      }
+      if (saved.difficulty) {
+        setSelectedDifficulty(saved.difficulty);
+      }
     }
   }, []);
 
@@ -54,11 +99,13 @@ export default function SetupScreen() {
         timerDuration: duration,
         includeRoles,
         language: selectedLanguage,
+        categories: selectedCategories,
+        difficulty: selectedDifficulty,
       });
     }, 500); // 500ms debounce
 
     return () => clearTimeout(timeoutId);
-  }, [gameMode, playerNames, hostName, duration, includeRoles, selectedLanguage]);
+  }, [gameMode, playerNames, hostName, duration, includeRoles, selectedLanguage, selectedCategories, selectedDifficulty]);
 
   const handleAddPlayer = () => {
     setPlayerNames([...playerNames, '']);
@@ -99,10 +146,34 @@ export default function SetupScreen() {
     setPlayerNames(newNames);
   };
 
+  const toggleCategory = (category: Category) => {
+    setSelectedCategories(prev => {
+      if (prev.includes(category)) {
+        // Don't allow deselecting if it's the last one
+        if (prev.length === 1) return prev;
+        return prev.filter(c => c !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
+  };
+
+  const toggleAllCategories = () => {
+    if (selectedCategories.length === CATEGORIES.length) {
+      // If all selected, keep only locations
+      setSelectedCategories(['locations']);
+    } else {
+      // Select all
+      setSelectedCategories(CATEGORIES.map(c => c.code));
+    }
+  };
+
   const handleContinue = async () => {
     setTimerDuration(duration);
-    setIncludeRoles(includeRoles);
+    setIncludeRoles(showRolesToggle ? includeRoles : false); // Only set roles if locations is sole category
     setLanguage(selectedLanguage);
+    setCategories(selectedCategories);
+    setDifficulty(selectedDifficulty);
     setMode(gameMode);
 
     if (gameMode === 'single-device') {
@@ -126,8 +197,10 @@ export default function SetupScreen() {
             hostName: hostName.trim(),
             settings: {
               timerDuration: duration,
-              includeRoles,
+              includeRoles: showRolesToggle ? includeRoles : false,
               language: selectedLanguage,
+              categories: selectedCategories,
+              difficulty: selectedDifficulty,
             },
           }),
         });
@@ -254,9 +327,65 @@ export default function SetupScreen() {
         )}
 
         <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              Word Categories ({selectedCategories.length}/{CATEGORIES.length})
+            </h2>
+            <button onClick={toggleAllCategories} className={styles.selectAllButton}>
+              {selectedCategories.length === CATEGORIES.length ? '✓ All' : 'Select All'}
+            </button>
+          </div>
+          <div className={styles.categoryGrid}>
+            {visibleCategories.map((cat) => {
+              const isSelected = selectedCategories.includes(cat.code);
+              return (
+                <button
+                  key={cat.code}
+                  onClick={() => toggleCategory(cat.code)}
+                  className={`${styles.categoryButton} ${
+                    isSelected ? styles.active : ''
+                  }`}
+                  title={cat.name}
+                >
+                  <span className={styles.categoryEmoji}>{cat.emoji}</span>
+                  <span className={styles.categoryName}>{cat.name}</span>
+                  {isSelected && <span className={styles.checkmark}>✓</span>}
+                </button>
+              );
+            })}
+          </div>
+          {CATEGORIES.length > CATEGORIES_PER_ROW && (
+            <button
+              onClick={() => setShowAllCategories(!showAllCategories)}
+              className={styles.expandButton}
+            >
+              {showAllCategories ? '▲ Show Less' : `▼ Show More (${CATEGORIES.length - CATEGORIES_PER_ROW} more)`}
+            </button>
+          )}
+        </div>
+
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>Difficulty Level</h2>
+          <div className={styles.difficultyGrid}>
+            {DIFFICULTIES.map((diff) => (
+              <button
+                key={diff.code}
+                onClick={() => setSelectedDifficulty(diff.code)}
+                className={`${styles.timerButton} ${
+                  selectedDifficulty === diff.code ? styles.active : ''
+                }`}
+              >
+                <div>{diff.name}</div>
+                <div className={styles.difficultyDesc}>{diff.desc}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Language</h2>
           <div className={styles.languageGrid}>
-            {LANGUAGES.map((lang) => (
+            {visibleLanguages.map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => setSelectedLanguage(lang.code)}
@@ -269,6 +398,14 @@ export default function SetupScreen() {
               </button>
             ))}
           </div>
+          {LANGUAGES.length > LANGUAGES_PER_ROW && (
+            <button
+              onClick={() => setShowAllLanguages(!showAllLanguages)}
+              className={styles.expandButton}
+            >
+              {showAllLanguages ? '▲ Show Less' : `▼ Show More (${LANGUAGES.length - LANGUAGES_PER_ROW} more)`}
+            </button>
+          )}
         </div>
 
         <div className={styles.section}>
@@ -288,29 +425,31 @@ export default function SetupScreen() {
           </div>
         </div>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Game Mode</h2>
-          <div className={styles.rolesToggle}>
-            <button
-              onClick={() => setIncludeRolesLocal(false)}
-              className={`${styles.modeButton} ${
-                !includeRoles ? styles.active : ''
-              }`}
-            >
-              <div className={styles.modeTitle}>Location Only</div>
-              <div className={styles.modeDesc}>Players only see the location</div>
-            </button>
-            <button
-              onClick={() => setIncludeRolesLocal(true)}
-              className={`${styles.modeButton} ${
-                includeRoles ? styles.active : ''
-              }`}
-            >
-              <div className={styles.modeTitle}>Location + Role</div>
-              <div className={styles.modeDesc}>Players see location and their role</div>
-            </button>
+        {showRolesToggle && (
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>Game Mode</h2>
+            <div className={styles.rolesToggle}>
+              <button
+                onClick={() => setIncludeRolesLocal(false)}
+                className={`${styles.modeButton} ${
+                  !includeRoles ? styles.active : ''
+                }`}
+              >
+                <div className={styles.modeTitle}>Word Only</div>
+                <div className={styles.modeDesc}>Players only see the word</div>
+              </button>
+              <button
+                onClick={() => setIncludeRolesLocal(true)}
+                className={`${styles.modeButton} ${
+                  includeRoles ? styles.active : ''
+                }`}
+              >
+                <div className={styles.modeTitle}>Word + Role</div>
+                <div className={styles.modeDesc}>Players see word and their role</div>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         <button
           onClick={handleContinue}

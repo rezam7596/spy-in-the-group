@@ -48,7 +48,7 @@ export async function POST(
       playerName: playerRole.playerName,
       isSpy: playerRole.isSpy,
       role: playerRole.role,
-      location: playerRole.isSpy ? null : room.location,
+      word: playerRole.isSpy ? null : room.word,
       hasConfirmed: playerRole.hasConfirmed,
       gamePhase: room.gamePhase,
     });

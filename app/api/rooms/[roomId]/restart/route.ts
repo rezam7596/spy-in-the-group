@@ -30,7 +30,7 @@ export async function POST(
   const success = await updateRoom(roomId, {
     status: 'waiting',
     gamePhase: 'waiting',
-    location: null,
+    word: null,
     playerRoles: undefined,
     votes: undefined,
     gameStartTime: null,
