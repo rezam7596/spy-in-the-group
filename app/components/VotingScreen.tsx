@@ -57,6 +57,13 @@ export default function VotingScreen({ roomId }: VotingScreenProps) {
       const response = await fetch(`/api/rooms/${roomId}`);
       if (response.ok) {
         const data = await response.json();
+
+        // Check if voting is already complete
+        if (data.room.gamePhase === 'results') {
+          router.push('/results');
+          return;
+        }
+
         setPlayers(data.room.players);
 
         // Check if current player already voted
