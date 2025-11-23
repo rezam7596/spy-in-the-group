@@ -51,6 +51,7 @@ export default function EndGameScreen() {
                 key={player.id}
                 onClick={() => handleVote(player.id)}
                 className={styles.playerButton}
+                data-testid={`vote-player-${player.name}`}
               >
                 {player.name}
               </button>
@@ -77,6 +78,7 @@ export default function EndGameScreen() {
                     key={word.name.en}
                     onClick={() => handleSpyGuess(word.name[language])}
                     className={styles.locationButton}
+                    data-testid="spy-guess-word"
                   >
                     {word.name[language]}
                   </button>

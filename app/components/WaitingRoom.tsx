@@ -89,7 +89,7 @@ export default function WaitingRoom() {
 
         <div className={styles.playerCard}>
           <div className={styles.playerLabel}>You are</div>
-          <div className={styles.playerNameDisplay}>{playerName}</div>
+          <div data-testid="player-name-display" className={styles.playerNameDisplay}>{playerName}</div>
         </div>
 
         <div className={styles.playersSection}>

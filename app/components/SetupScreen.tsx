@@ -346,6 +346,8 @@ export default function SetupScreen() {
                     isSelected ? styles.active : ''
                   }`}
                   title={cat.name}
+                  data-testid={`category-${cat.code}`}
+                  data-active={isSelected ? 'true' : 'false'}
                 >
                   <span className={styles.categoryEmoji}>{cat.emoji}</span>
                   <span className={styles.categoryName}>{cat.name}</span>
@@ -358,6 +360,7 @@ export default function SetupScreen() {
             <button
               onClick={() => setShowAllCategories(!showAllCategories)}
               className={styles.expandButton}
+              data-testid="show-more-categories"
             >
               {showAllCategories ? '▲ Show Less' : `▼ Show More (${CATEGORIES.length - CATEGORIES_PER_ROW} more)`}
             </button>
@@ -374,6 +377,8 @@ export default function SetupScreen() {
                 className={`${styles.timerButton} ${
                   selectedDifficulty === diff.code ? styles.active : ''
                 }`}
+                data-testid={`difficulty-${diff.code}`}
+                data-active={selectedDifficulty === diff.code ? 'true' : 'false'}
               >
                 <div>{diff.name}</div>
                 <div className={styles.difficultyDesc}>{diff.desc}</div>
@@ -392,6 +397,8 @@ export default function SetupScreen() {
                 className={`${styles.languageButton} ${
                   selectedLanguage === lang.code ? styles.active : ''
                 }`}
+                data-testid={`language-${lang.code}`}
+                data-active={selectedLanguage === lang.code ? 'true' : 'false'}
               >
                 <span className={styles.languageFlag}>{lang.flag}</span>
                 <span className={styles.languageName}>{lang.name}</span>
@@ -402,6 +409,7 @@ export default function SetupScreen() {
             <button
               onClick={() => setShowAllLanguages(!showAllLanguages)}
               className={styles.expandButton}
+              data-testid="show-more-languages"
             >
               {showAllLanguages ? '▲ Show Less' : `▼ Show More (${LANGUAGES.length - LANGUAGES_PER_ROW} more)`}
             </button>
@@ -418,6 +426,8 @@ export default function SetupScreen() {
                 className={`${styles.timerButton} ${
                   duration === minutes ? styles.active : ''
                 }`}
+                data-testid={`timer-${minutes}`}
+                data-active={duration === minutes ? 'true' : 'false'}
               >
                 {minutes} min
               </button>

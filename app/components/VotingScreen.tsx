@@ -140,6 +140,7 @@ export default function VotingScreen({ roomId }: VotingScreenProps) {
                   className={`${styles.playerButton} ${
                     selectedPlayer === player ? styles.selected : ''
                   }`}
+                  data-testid={`vote-player-${player}`}
                 >
                   <span className={styles.playerIcon}>
                     {selectedPlayer === player ? '✓' : '👤'}

@@ -72,6 +72,26 @@ pnpm build
 pnpm start
 ```
 
+### Running Tests
+
+First, install Playwright browsers:
+
+```bash
+pnpm exec playwright install chromium
+```
+
+Run all e2e tests:
+
+```bash
+pnpm test:e2e
+```
+
+Run tests with UI mode (interactive):
+
+```bash
+pnpm test:e2e:ui
+```
+
 ## Technical Overview
 
 ### Tech Stack
@@ -83,6 +103,7 @@ pnpm start
 - **State Management:** React Context API for client-side state
 - **Deployment:** Vercel with serverless functions
 - **API:** Next.js API routes for room management
+- **Testing:** Playwright for E2E tests
 
 ### Key Technical Features
 

@@ -173,7 +173,7 @@ export default function ResultsScreen({ roomId }: ResultsScreenProps) {
         <div className={spyWon ? styles.spyWinCard : styles.playersWinCard}>
           <div className={styles.winIcon}>{spyWon ? '🕵️' : '🎉'}</div>
           <h2 className={styles.winTitle}>
-            {spyWon ? 'The Spy Wins!' : 'Players Win!'}
+            {spyWon ? 'The Spy Wins!' : 'Non-Spies Win!'}
           </h2>
           <p className={styles.winText}>
             {spyWon

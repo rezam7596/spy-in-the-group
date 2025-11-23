@@ -191,10 +191,10 @@ export default function JoinPage({params}: { params: Promise<{ roomId: string }>
             <>
               <div className={styles.roomCode}>
                 <div className={styles.codeLabel}>Room Code</div>
-                <div className={styles.code}>{roomId}</div>
+                <div className={styles.code} data-testid="room-code">{roomId}</div>
               </div>
 
-              <div className={styles.qrSection}>
+              <div data-testid="join-qr-code" className={styles.qrSection}>
                 <QRCodeSVG value={joinUrl} size={200} level="H"/>
                 <p className={styles.qrHint}>Scan to join</p>
               </div>
@@ -216,7 +216,7 @@ export default function JoinPage({params}: { params: Promise<{ roomId: string }>
           {!isHost && (
             <div className={styles.playerCard}>
               <div className={styles.playerLabel}>You are</div>
-              <div className={styles.playerNameDisplay}>
+              <div data-testid="player-name-display" className={styles.playerNameDisplay}>
                 {currentPlayerName}
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function JoinPage({params}: { params: Promise<{ roomId: string }>
                 {players.map((player, index) => (
                   <div key={index} className={styles.playerItem}>
                     <span className={styles.playerNumber}>{index + 1}</span>
-                    <span className={styles.playerName}>
+                    <span className={styles.playerName} data-testid="player-name">
                       {player}
                       {index === 0 && (
                         <span className={styles.hostBadge}> (Host)</span>
